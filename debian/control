@@ -3,17 +3,15 @@ Section: net
 Priority: optional
 Maintainer: Faidon Liambotis <paravoid@debian.org>
 Build-Depends: debhelper (>= 7.0.50)
-Standards-Version: 3.8.4
-Vcs-Svn: http://fivebits.net/svn/dbeacon/trunk/
-Vcs-Browser: http://fivebits.net/proj/dbeacon/browser/ 
+Standards-Version: 3.9.2
 
 Package: dbeacon
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, lsb-base (>= 3.0-3)
-Recommends: libcgi-perl, libxml-parser-perl, ${perl:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, lsb-base
+Recommends: libxml-parser-perl, ${perl:Depends}
 Suggests: librrds-perl
-Description: A Multicast Beacon
- dbeacon is a multicast beacon. Its main purpose is to monitor other beacon's
+Description: Multicast beacon
+ dbeacon is a multicast beacon: its main purpose is to monitor other beacons'
  reachability and collect statistics such as loss, delay and jitter between 
  them.
  .
