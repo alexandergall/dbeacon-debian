@@ -1,1 +1,2 @@
-rfc3542-ipv6recvpktinfo
+0001-rfc3542-ipv6recvpktinfo.patch
+0002-fix-ssm-join-bug.patch

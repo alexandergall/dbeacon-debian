@@ -1,0 +1,35 @@
+From: Faidon Liambotis <paravoid@debian.org>
+Date: Tue, 22 Jul 2014 11:59:44 +0200
+Subject: rfc3542-ipv6recvpktinfo
+
+---
+ dbeacon_posix.cpp |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/dbeacon_posix.cpp b/dbeacon_posix.cpp
+index 18c5b80..54351ee 100644
+--- a/dbeacon_posix.cpp
++++ b/dbeacon_posix.cpp
+@@ -252,12 +252,19 @@ bool SetHops(int sock, const address &addr, int ttl) {
+ }
+ 
+ bool RequireToAddress(int sock, const address &addr) {
+-#ifdef IPV6_PKTINFO
++#if defined(IPV6_RECVPKTINFO) || defined(IPV6_PKTINFO)
++	int on = 1;
++#endif
++
+ 	if (addr.family() == AF_INET6) {
+-		int on = 1;
++#ifdef IPV6_RECVPKTINFO
++		/* RFC 3542 / glibc >= 2.5 */
++		return setsockopt(sock, IPPROTO_IPV6, IPV6_RECVPKTINFO, &on, sizeof(on)) == 0;
++#elif defined(IPV6_PKTINFO)
++		/* RFC 2292 / glibc <= 2.4 */
+ 		return setsockopt(sock, IPPROTO_IPV6, IPV6_PKTINFO, &on, sizeof(on)) == 0;
+-	}
+ #endif
++	}
+ 
+ 	return true;
+ }
