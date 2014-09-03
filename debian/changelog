@@ -1,3 +1,10 @@
+dbeacon (0.3.9.3-2.2) UNRELEASED; urgency=low
+
+  * Non-maintainer upload.
+  * Disable PMTUD for IPv4
+
+ -- Alexander Gall <alexander.gall@gmail.com>  Wed, 03 Sep 2014 10:42:20 +0200
+
 dbeacon (0.3.9.3-2.1) unstable; urgency=low
 
   * Non-maintainer upload.
