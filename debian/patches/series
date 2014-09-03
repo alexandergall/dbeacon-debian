@@ -1,2 +1,3 @@
 0001-rfc3542-ipv6recvpktinfo.patch
 0002-fix-ssm-join-bug.patch
+0003-disable-ipv4-pmtud.patch

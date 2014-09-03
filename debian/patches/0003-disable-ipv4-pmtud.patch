@@ -1,0 +1,32 @@
+From: Alexander Gall <alexander.gall@gmail.com>
+Date: Wed, 3 Sep 2014 10:24:30 +0200
+Subject: disable-ipv4-pmtud
+
+Disable PMTUD for IPv4.  Recipient reports can become large and
+trigger blackholing because PMTUD for multicast is not supported by
+IPv4 (no ICMP messages are generated in response to multicast packets
+in general).
+---
+ dbeacon_posix.cpp |    9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/dbeacon_posix.cpp b/dbeacon_posix.cpp
+index 54351ee..b4f57f5 100644
+--- a/dbeacon_posix.cpp
++++ b/dbeacon_posix.cpp
+@@ -188,6 +188,15 @@ int SetupSocket(const address &addr, bool shouldbind, bool ssm) {
+ 		return -1;
+ 	}
+ 
++	// Turn off PMTUD for IPv4
++	if (af_family == AF_INET) {
++	        int pmtud = IP_PMTUDISC_DONT;
++	        if (setsockopt(sock, IPPROTO_IP, IP_MTU_DISCOVER, &pmtud, sizeof(pmtud)) != 0) {
++	                perror("setsockopt disable PMTUD");
++	                return -1;
++	        }
++	}
++
+ 	if (shouldbind) {
+ 		if (bind(sock, addr.saddr(), addr.addrlen()) != 0) {
+ 			perror("Failed to bind multicast socket");
